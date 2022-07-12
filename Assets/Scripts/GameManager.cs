@@ -7,6 +7,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject playerObj;
     [SerializeField] GameObject fishingObj;
 
+    public bool lookingAtGround = false;
+    public bool lookingAtWater = false;
+
     private ThirdPersonMovement movement;
     private FishingController fishingController;
     // Start is called before the first frame update
@@ -23,9 +26,13 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Mouse0))
+        if (Input.GetKeyUp(KeyCode.Mouse0) && (lookingAtWater && !lookingAtGround))
         {
             fishingObj.GetComponent<FishingController>().Fishing();
+        }
+        else if(Input.GetKeyUp(KeyCode.Mouse0) && !lookingAtWater)
+        {
+            
         }
     }
 
