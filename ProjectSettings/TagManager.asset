@@ -6,15 +6,16 @@ TagManager:
   tags:
   - Water
   - Ground
+  - Hook
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Ground
+  - SeaBed
   - Water
   - UI
-  - 
-  - 
+  - Player
+  - Ground
   - 
   - 
   - 
