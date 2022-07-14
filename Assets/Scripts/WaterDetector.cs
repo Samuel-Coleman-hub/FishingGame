@@ -6,21 +6,48 @@ public class WaterDetector : MonoBehaviour
 {
     [SerializeField] GameManager gameManager;
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.tag == "Ground")
-        {
-            gameManager.lookingAtGround = true;
-            Debug.Log("DETECTOR Looking at ground");
-        }
-    }
+    [SerializeField] int degreeOfAngle = 20;
 
-    private void OnTriggerExit(Collider other)
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if(other.tag == "Ground")
+    //    {
+    //        gameManager.lookingAtGround = true;
+    //        Debug.Log("DETECTOR Looking at ground");
+    //    }
+    //}
+
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    if(other.tag == "Ground")
+    //    {
+    //        gameManager.lookingAtGround = false;
+    //        Debug.Log("DETECTOR Not looking at ground");
+    //    }
+    //}
+
+    private void FixedUpdate()
     {
-        if(other.tag == "Ground")
+        RaycastHit hit;
+        // Does the ray intersect any objects excluding the player layer
+        if (Physics.Raycast(transform.position, Quaternion.AngleAxis(degreeOfAngle, transform.right) * transform.forward, out hit, Mathf.Infinity))
         {
-            gameManager.lookingAtGround = false;
-            Debug.Log("DETECTOR Not looking at ground");
+            Debug.DrawRay(transform.position, Quaternion.AngleAxis(degreeOfAngle, transform.right) * transform.forward * 1000, Color.green);
+            Debug.Log("Hit " + hit.transform.gameObject.tag);
+
+            if(hit.transform.gameObject.tag == "Water")
+            {
+                gameManager.lookingAtWater = true;
+            }
+            else
+            {
+                gameManager.lookingAtWater = false;
+            }
+        }
+        else
+        {
+            Debug.DrawRay(transform.position, Quaternion.AngleAxis(degreeOfAngle, transform.right) * transform.forward * 1000, Color.red);
+            Debug.Log("Did not Hit");
         }
     }
 
