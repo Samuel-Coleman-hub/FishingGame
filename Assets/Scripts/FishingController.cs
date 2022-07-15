@@ -7,7 +7,8 @@ public class FishingController : MonoBehaviour
 
     [SerializeField] GameManager gameManager;
 
-    private bool casting = false;
+    public bool hookOccupied = false;
+    public bool casting = false;
 
     public void Fishing()
     {

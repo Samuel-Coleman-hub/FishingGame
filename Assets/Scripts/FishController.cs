@@ -5,8 +5,15 @@ using UnityEngine.AI;
 
 public class FishController : MonoBehaviour
 {
-    [SerializeField] NavMeshAgent agent;
+    [SerializeField] float idleTimeMin = 1f;
+    [SerializeField] float idleTimeMax = 6f;
+
+    private NavMeshAgent agent;
+    private NavMeshObstacle obstacle;
+    private Animator animator;
+
     private Transform hook;
+    private FishingController fishingController;
     [SerializeField] LayerMask whatIsSeaBed, whatIsPlayer;
 
     //Patrol Variables
@@ -17,22 +24,29 @@ public class FishController : MonoBehaviour
     public float sightRange;
     public bool hookInSightRange;
 
+    
+
     private void Awake()
     {
         hook = GameObject.FindGameObjectWithTag("Hook").transform;
+        fishingController = hook.gameObject.GetComponent<FishingController>();
         agent = GetComponent<NavMeshAgent>();
+        obstacle = GetComponent<NavMeshObstacle>();
+        animator = GetComponent<Animator>();
+
+        animator.SetTrigger("Swim");
     }
 
     private void Update()
     {
-        //check sightrange
         hookInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
+
 
         if (!hookInSightRange)
         {
             Patrolling();
         }
-        else
+        else if(fishingController.casting && !fishingController.hookOccupied)
         {
             SwimToHook();
         }
@@ -40,21 +54,22 @@ public class FishController : MonoBehaviour
 
     private void Patrolling()
     {
-        if (!swimPointSet)
-        {
-            FindSwimPoint();
-        }
-        else
-        {
-            agent.SetDestination(swimPoint);
-        }
 
-        Vector3 distanceToSwimPoint = transform.position - swimPoint;
+            if (!swimPointSet)
+            {
+                FindSwimPoint();
+            }
+            else
+            {
+                agent.SetDestination(swimPoint);
+            }
 
-        if (distanceToSwimPoint.magnitude < 1f)
-        {
-            swimPointSet = false;
-        }
+            Vector3 distanceToSwimPoint = transform.position - swimPoint;
+
+            if (distanceToSwimPoint.magnitude < 1f)
+            {
+                StartCoroutine(WaitAtPoint());
+            }
     }
 
     private void FindSwimPoint()
@@ -63,7 +78,9 @@ public class FishController : MonoBehaviour
         float randomX = Random.Range(-swimPointRange, swimPointRange);
 
         swimPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
-        if (Physics.Raycast(swimPoint, - transform.up, 2f, whatIsSeaBed))
+
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(swimPoint, out hit, 1f, NavMesh.AllAreas))
         {
             swimPointSet = true;
         }
@@ -71,8 +88,18 @@ public class FishController : MonoBehaviour
 
     private void SwimToHook()
     {
-        agent.SetDestination(hook.position);
+        fishingController.hookOccupied = true;
+        agent.SetDestination(new Vector3(hook.position.x, transform.position.y, hook.position.z));
     }
+
+    private IEnumerator WaitAtPoint()
+    {
+        animator.SetTrigger("Idle");
+        yield return new WaitForSeconds(Random.Range(idleTimeMin, idleTimeMax));
+        animator.SetTrigger("Swim");
+        swimPointSet = false;
+    }
+
 
     private void OnDrawGizmosSelected()
     {

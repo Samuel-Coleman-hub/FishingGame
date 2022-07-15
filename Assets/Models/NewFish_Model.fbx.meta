@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b6d480c48f9eb4f4680288c1c7513a3c
+guid: 7b6a55ca1cb54854390c7cd0204b929a
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable:
@@ -18,12 +18,6 @@ ModelImporter:
   - first:
       74: -2106472897782759856
     second: Idle (1)
-  - first:
-      74: 9174591801057368115
-    second: Fish|Idle (1)
-  - first:
-      74: 1106915612958900364
-    second: Fish|Swim (1)
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -54,8 +48,8 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Fish|Swim (1)
-      takeName: Fish|Swim
+      name: Swim
+      takeName: Swim
       internalID: 0
       firstFrame: 0
       lastFrame: 85
@@ -66,7 +60,7 @@ ModelImporter:
       loop: 0
       hasAdditiveReferencePose: 0
       loopTime: 1
-      loopBlend: 1
+      loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
@@ -95,7 +89,7 @@ ModelImporter:
       loop: 0
       hasAdditiveReferencePose: 0
       loopTime: 1
-      loopBlend: 1
+      loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
