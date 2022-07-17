@@ -8,32 +8,14 @@ public class WaterDetector : MonoBehaviour
 
     [SerializeField] int degreeOfAngle = 20;
 
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if(other.tag == "Ground")
-    //    {
-    //        gameManager.lookingAtGround = true;
-    //        Debug.Log("DETECTOR Looking at ground");
-    //    }
-    //}
-
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    if(other.tag == "Ground")
-    //    {
-    //        gameManager.lookingAtGround = false;
-    //        Debug.Log("DETECTOR Not looking at ground");
-    //    }
-    //}
-
     private void FixedUpdate()
     {
         RaycastHit hit;
         // Does the ray intersect any objects excluding the player layer
         if (Physics.Raycast(transform.position, Quaternion.AngleAxis(degreeOfAngle, transform.right) * transform.forward, out hit, Mathf.Infinity))
         {
-            Debug.DrawRay(transform.position, Quaternion.AngleAxis(degreeOfAngle, transform.right) * transform.forward * 1000, Color.green);
-            Debug.Log("Hit " + hit.transform.gameObject.tag);
+            //Debug.DrawRay(transform.position, Quaternion.AngleAxis(degreeOfAngle, transform.right) * transform.forward * 1000, Color.green);
+            //Debug.Log("Hit " + hit.transform.gameObject.tag);
 
             if(hit.transform.gameObject.tag == "Water")
             {
@@ -46,8 +28,7 @@ public class WaterDetector : MonoBehaviour
         }
         else
         {
-            Debug.DrawRay(transform.position, Quaternion.AngleAxis(degreeOfAngle, transform.right) * transform.forward * 1000, Color.red);
-            Debug.Log("Did not Hit");
+            //Debug.DrawRay(transform.position, Quaternion.AngleAxis(degreeOfAngle, transform.right) * transform.forward * 1000, Color.red);
         }
     }
 

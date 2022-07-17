@@ -11,6 +11,7 @@ public class FishController : MonoBehaviour
     private NavMeshAgent agent;
     private NavMeshObstacle obstacle;
     private Animator animator;
+    private Rigidbody rb;
 
     private Transform hook;
     private FishingController fishingController;
@@ -24,6 +25,8 @@ public class FishController : MonoBehaviour
     public float sightRange;
     public bool hookInSightRange;
 
+    private bool biting = false;
+
     
 
     private void Awake()
@@ -33,6 +36,7 @@ public class FishController : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         obstacle = GetComponent<NavMeshObstacle>();
         animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody>();
 
         animator.SetTrigger("Swim");
     }
@@ -41,15 +45,18 @@ public class FishController : MonoBehaviour
     {
         hookInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
 
-
-        if (!hookInSightRange)
+        if (!biting)
         {
-            Patrolling();
+            if (!hookInSightRange)
+            {
+                Patrolling();
+            }
+            else if (fishingController.casting) //need to work out new way to check if occupied hook)
+            {
+                SwimToHook();
+            }
         }
-        else if(fishingController.casting && !fishingController.hookOccupied)
-        {
-            SwimToHook();
-        }
+        
     }
 
     private void Patrolling()
@@ -89,7 +96,21 @@ public class FishController : MonoBehaviour
     private void SwimToHook()
     {
         fishingController.hookOccupied = true;
-        agent.SetDestination(new Vector3(hook.position.x, transform.position.y, hook.position.z));
+        agent.SetDestination(hook.position);
+
+        Vector3 distanceToHook = transform.position - hook.transform.position;
+
+        if (distanceToHook.magnitude < 1f)
+        {
+            BitingHook();
+        }
+    }
+
+    private void BitingHook()
+    {
+        Debug.Log("Biting");
+        biting = true;
+        animator.SetTrigger("Biting");
     }
 
     private IEnumerator WaitAtPoint()
