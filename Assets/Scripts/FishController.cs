@@ -9,8 +9,11 @@ public class FishController : MonoBehaviour
     [Header("Fish Biting Settings")]
     [SerializeField] float distanceBehindFish = 2.5f;
     [SerializeField] float bitingSpeed = 1f;
+    [SerializeField] int minBites = 2, maxBites = 6;
     private Vector3[] bitingPositions = new Vector3[2];
     private int bitingState = 0;
+    private int biteCounter = 0;
+    private int totalBites = 6;
     private bool biting = false;
     private Transform hook;
 
@@ -31,6 +34,7 @@ public class FishController : MonoBehaviour
     private Animator animator;
     private Rigidbody rb;
     private FishingController fishingController;
+    private HookBobber bobber;
 
     private void Awake()
     {
@@ -40,6 +44,7 @@ public class FishController : MonoBehaviour
         obstacle = GetComponent<NavMeshObstacle>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
+        bobber = fishingController.GetComponentInParent<HookBobber>();
 
         animator.SetTrigger("Swim");
     }
@@ -108,38 +113,63 @@ public class FishController : MonoBehaviour
 
         if (distanceToHook.magnitude < 1f)
         {
-
-            Vector3 behindFish = transform.position - (transform.forward * distanceBehindFish);
-            Vector3 hookPos = new Vector3(hook.transform.position.x, transform.position.y, hook.transform.position.z);
-            bitingPositions[0] = behindFish;
-            bitingPositions[1] = hookPos;
-            agent.enabled = false;
-
-            biting = true;
+            StartBitingSequence();
         }
+    }
+
+    private void StartBitingSequence()
+    {
+        bobber.BobHook();
+        Vector3 behindFish = transform.position - (transform.forward * distanceBehindFish);
+        Vector3 hookPos = new Vector3(hook.transform.position.x, transform.position.y, hook.transform.position.z);
+
+        biteCounter = 0;
+        totalBites = Random.Range(minBites, maxBites);
+
+        bitingPositions[0] = behindFish;
+        bitingPositions[1] = hookPos;
+        agent.enabled = false;
+
+        biting = true;
     }
 
     private void BitingHook()
     {
-        Debug.Log("Biting");
-        //biting = true;
-        //animator.SetTrigger("Biting");
-
         if(Vector3.Distance(bitingPositions[bitingState], transform.position) < 1f)
         {
+
             if(bitingState == 0)
             {
                 bitingState = 1;
             }
             else
             {
-                fishingController.BobHook();
                 bitingState = 0;
+                biteCounter++;
+
+                if (biteCounter <= totalBites)
+                {
+                    bobber.BobHook();
+                }
+                else
+                {
+                    FishHooked();
+                }
+                
+                
             }
         }
 
         transform.position = Vector3.MoveTowards(transform.position, bitingPositions[bitingState], Time.deltaTime * bitingSpeed);
+    }
 
+    private void FishHooked()
+    {
+        bobber.SinkHook();
+        agent.enabled = true; //just for when working this out
+        biting = false;
+
+        
     }
 
     private IEnumerator WaitAtPoint()

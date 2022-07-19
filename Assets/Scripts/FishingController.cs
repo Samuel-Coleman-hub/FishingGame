@@ -30,11 +30,6 @@ public class FishingController : MonoBehaviour
         }
     }
 
-    public void BobHook()
-    {
-        animator.SetTrigger("Bob");
-    }
-
     private void Cast()
     {
         animator.SetTrigger("Cast");
