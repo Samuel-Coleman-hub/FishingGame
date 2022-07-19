@@ -76,7 +76,7 @@ GameObject:
   - component: {fileID: 2533518935727666298}
   - component: {fileID: 6614257404621709132}
   - component: {fileID: -4623152464809241730}
-  - component: {fileID: 7352821727050731889}
+  - component: {fileID: -5241444683373972639}
   m_Layer: 0
   m_Name: Fish
   m_TagString: Untagged
@@ -183,7 +183,7 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
---- !u!54 &7352821727050731889
+--- !u!54 &-5241444683373972639
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

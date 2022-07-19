@@ -10,6 +10,13 @@ public class FishingController : MonoBehaviour
     public bool hookOccupied = false;
     public bool casting = false;
 
+    private Animator animator;
+
+    private void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
+
     public void Fishing()
     {
         if (casting)
@@ -23,17 +30,21 @@ public class FishingController : MonoBehaviour
         }
     }
 
+    public void BobHook()
+    {
+        animator.SetTrigger("Bob");
+    }
+
     private void Cast()
     {
-        Debug.Log("YARRRRR WE BE CARSTINGG");
-        GetComponent<Animator>().SetTrigger("Cast");
+        animator.SetTrigger("Cast");
         gameManager.ToggleMovement();
         casting = true;
     }
 
     private void Reel()
     {
-        GetComponent<Animator>().SetTrigger("Reel");
+        animator.SetTrigger("Reel");
         gameManager.ToggleMovement();
         casting = false;
     }
