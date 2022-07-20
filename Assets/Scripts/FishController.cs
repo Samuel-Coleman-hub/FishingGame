@@ -9,13 +9,17 @@ public class FishController : MonoBehaviour
     [Header("Fish Biting Settings")]
     [SerializeField] float distanceBehindFish = 2.5f;
     [SerializeField] float bitingSpeed = 1f;
-    [SerializeField] int minBites = 2, maxBites = 6;
+    [SerializeField] int minBites = 2, maxBites = 5;
     private Vector3[] bitingPositions = new Vector3[2];
     private int bitingState = 0;
     private int biteCounter = 0;
     private int totalBites = 6;
     private bool biting = false;
     private Transform hook;
+
+    [Header("Fish Catching Settings")]
+    [SerializeField] float waitTimeToCatch = 3f;
+    private bool caught = false;
 
     //NavMesh movement settings
     [Header("NavMeshAgent Movement Settings")]
@@ -36,6 +40,10 @@ public class FishController : MonoBehaviour
     private FishingController fishingController;
     private HookBobber bobber;
 
+    //stopWatch variables
+    private float stopWatch;
+    private bool stopWatchOn;
+
     private void Awake()
     {
         hook = GameObject.FindGameObjectWithTag("Hook").transform;
@@ -53,7 +61,7 @@ public class FishController : MonoBehaviour
     {
         hookInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
 
-        if (!biting)
+        if (!biting && !caught)
         {
             if (!hookInSightRange)
             {
@@ -64,9 +72,19 @@ public class FishController : MonoBehaviour
                 SwimToHook();
             }
         }
-        else
+        else if(biting)
         {
             BitingHook();
+        }
+
+        if (caught && TryGetComponent(out HingeJoint hinge))
+        {
+            //hinge.anchor = hook.transform.position;
+        }
+
+        if (stopWatchOn)
+        {
+            stopWatch += Time.deltaTime;
         }
         
     }
@@ -165,11 +183,71 @@ public class FishController : MonoBehaviour
 
     private void FishHooked()
     {
-        bobber.SinkHook();
-        agent.enabled = true; //just for when working this out
+        caught = true;
         biting = false;
+        agent.enabled = false; //just for when working this out
+        bobber.SinkHook();
 
+        StartCoroutine(CatchFish());
+    }
+
+    private IEnumerator CatchFish()
+    {
+        bool done = false;
+
+        StartStopWatch();
+
+        while (!done)
+        {
+            if (Input.GetButtonDown("Fish"))
+            {
+                done = true;
+                StopStopWatch();
+                Debug.Log("Fish caught");
+                ReelInFish();
+            }
+            else if(stopWatch >= waitTimeToCatch)
+            {
+                done = true;
+                StopStopWatch();
+                Debug.Log("Fish not caught");
+                FishSwimAway();
+            }
+            yield return null;
+        }
+    }
+
+    private void FishSwimAway()
+    {
+
+    }
+
+    private void ReelInFish()
+    {
+        //this.gameObject.transform.parent = fishingController.transform;
+        animator.enabled = false;
+
+        //gameObject.transform.parent = hook.transform;
+
+        //gameObject.AddComponent<HingeJoint>();
+        //gameObject.GetComponent<HingeJoint>().connectedBody = hook.GetComponent<Rigidbody>();
+        //gameObject.GetComponent<HingeJoint>().anchor = transform.InverseTransformDirection(hook.position);
+
+        hook.GetComponent<HingeJoint>().connectedBody = rb;
         
+
+    }
+
+    private void StartStopWatch()
+    {
+        stopWatch = 0;
+        stopWatchOn = true;
+    }
+
+    private void StopStopWatch()
+    {
+        stopWatchOn = false;
+        stopWatch = 0;
     }
 
     private IEnumerator WaitAtPoint()

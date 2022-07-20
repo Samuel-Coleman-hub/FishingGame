@@ -133,16 +133,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00365bd7709da3e49ba8a594793fb2d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  distanceBehindFish: 2.5
+  bitingSpeed: 1
+  minBites: 2
+  maxBites: 6
   idleTimeMin: 1
   idleTimeMax: 6
+  swimPoint: {x: 0, y: 0, z: 0}
+  swimPointRange: 3
   whatIsSeaBed:
     serializedVersion: 2
     m_Bits: 8
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 64
-  swimPoint: {x: 0, y: 0, z: 0}
-  swimPointRange: 3
   sightRange: 3
   hookInSightRange: 0
 --- !u!195 &6614257404621709132
