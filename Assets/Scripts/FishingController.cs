@@ -10,11 +10,21 @@ public class FishingController : MonoBehaviour
     public bool hookOccupied = false;
     public bool casting = false;
 
-    private Animator animator;
+    private Animator fishingControllerAnimator;
+    private Animator hookBobAnimator;
 
     private void Start()
     {
-        animator = GetComponent<Animator>();
+        fishingControllerAnimator = GetComponent<Animator>();
+        try
+        {
+            hookBobAnimator = transform.parent.GetComponent<Animator>();
+            Debug.Log(hookBobAnimator.gameObject.name);
+        }catch(System.Exception e)
+        {
+            Debug.Log(e);
+        }
+        
     }
 
     public void Fishing()
@@ -32,15 +42,43 @@ public class FishingController : MonoBehaviour
 
     private void Cast()
     {
-        animator.SetTrigger("Cast");
+        fishingControllerAnimator.SetTrigger("Cast");
+        //hookBobAnimator.SetTrigger("Rise");
         gameManager.ToggleMovement();
         casting = true;
     }
 
-    private void Reel()
+    public void Reel()
     {
-        animator.SetTrigger("Reel");
+        fishingControllerAnimator.SetTrigger("Reel");
+        hookOccupied = false;
+        //StartCoroutine(WaitToLift());
+        
+    }
+
+    //private IEnumerator WaitToLift()
+    //{
+    //    yield return new WaitForSeconds(2f);
+    //    hookBobAnimator.SetTrigger("Rise");
+    //    gameManager.ToggleMovement();
+    //    casting = false;
+    //}
+
+    //Called at the end of th Reel Animation
+    private void ResetAfterReel()
+    {
+        hookBobAnimator.SetTrigger("Rise");
         gameManager.ToggleMovement();
         casting = false;
+    }
+
+    public void BobHook()
+    {
+        hookBobAnimator.SetTrigger("Bob");
+    }
+
+    public void SinkHook()
+    {
+        hookBobAnimator.SetTrigger("Sink");
     }
 }
