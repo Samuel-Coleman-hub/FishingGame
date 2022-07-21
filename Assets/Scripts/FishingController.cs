@@ -16,15 +16,7 @@ public class FishingController : MonoBehaviour
     private void Start()
     {
         fishingControllerAnimator = GetComponent<Animator>();
-        try
-        {
-            hookBobAnimator = transform.parent.GetComponent<Animator>();
-            Debug.Log(hookBobAnimator.gameObject.name);
-        }catch(System.Exception e)
-        {
-            Debug.Log(e);
-        }
-        
+        hookBobAnimator = transform.parent.GetComponent<Animator>();
     }
 
     public void Fishing()

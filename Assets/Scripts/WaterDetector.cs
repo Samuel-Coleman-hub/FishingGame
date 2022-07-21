@@ -8,16 +8,24 @@ public class WaterDetector : MonoBehaviour
 
     [SerializeField] int degreeOfAngle = 20;
 
+    private float lastCallTime = 1;
+    private RaycastHit hit;
+
     private void FixedUpdate()
     {
-        RaycastHit hit;
-        // Does the ray intersect any objects excluding the player layer
+        if(Time.time - lastCallTime >= 0.2f)
+        {
+            RayCast();
+        }
+    }
+
+    private void RayCast()
+    {
+        lastCallTime = Time.time;
         if (Physics.Raycast(transform.position, Quaternion.AngleAxis(degreeOfAngle, transform.right) * transform.forward, out hit, Mathf.Infinity))
         {
-            //Debug.DrawRay(transform.position, Quaternion.AngleAxis(degreeOfAngle, transform.right) * transform.forward * 1000, Color.green);
-            //Debug.Log("Hit " + hit.transform.gameObject.tag);
 
-            if(hit.transform.gameObject.tag == "Water")
+            if (hit.transform.gameObject.tag == "Water")
             {
                 gameManager.lookingAtWater = true;
             }
@@ -26,10 +34,5 @@ public class WaterDetector : MonoBehaviour
                 gameManager.lookingAtWater = false;
             }
         }
-        else
-        {
-            //Debug.DrawRay(transform.position, Quaternion.AngleAxis(degreeOfAngle, transform.right) * transform.forward * 1000, Color.red);
-        }
     }
-
 }
