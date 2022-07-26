@@ -48,6 +48,7 @@ public class FishController : MonoBehaviour
 
     //Other Variables
     private float lastCallTime = 1;
+    private bool scared = false;
 
     private void Awake()
     {
@@ -66,7 +67,7 @@ public class FishController : MonoBehaviour
     {
         hookInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
 
-        if (!biting && !caught)
+        if (!biting && !caught && !scared)
         {
             if (!hookInSightRange && (Time.time - lastCallTime >= 0.2f))
             {
@@ -77,7 +78,7 @@ public class FishController : MonoBehaviour
                 SwimToHook();
             }
         }
-        else if(biting)
+        else if(biting && !scared)
         {
             BitingHook();
         }
@@ -231,15 +232,19 @@ public class FishController : MonoBehaviour
         Destroy(this.gameObject);
     }
 
-    private void FishEscape() 
+    public void FishEscape()
     {
-        agent.enabled = true;
-        FindSwimPoint();
-        agent.speed *= 4;
-        agent.SetDestination(swimPoint);
-        fishingController.Reel();
-        //Will need to fade out in final game
-        StartCoroutine(WaitToKill(3f));
+        //if (hookInSightRange)
+        //{
+            scared = true;
+            agent.enabled = true;
+            FindSwimPoint();
+            agent.speed *= 4;
+            agent.SetDestination(swimPoint);
+            fishingController.Reel();
+            //Will need to fade out in final game
+            StartCoroutine(WaitToKill(3f));
+        //}
     }
 
     private void StartStopWatch()

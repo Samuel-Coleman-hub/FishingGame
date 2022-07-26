@@ -6,6 +6,7 @@ public class FishingController : MonoBehaviour
 {
 
     [SerializeField] GameManager gameManager;
+    [SerializeField] FishSpawner fishSpawner;
 
     public bool hookOccupied = false;
     public bool casting = false;
@@ -13,10 +14,13 @@ public class FishingController : MonoBehaviour
     private Animator fishingControllerAnimator;
     private Animator hookBobAnimator;
 
+    //private List<FishController> fishes = new List<FishController>();
+
     private void Start()
     {
         fishingControllerAnimator = GetComponent<Animator>();
         hookBobAnimator = transform.parent.GetComponent<Animator>();
+       // fishes = fishSpawner.fishes;
     }
 
     public void Fishing()
@@ -24,7 +28,6 @@ public class FishingController : MonoBehaviour
         if (casting)
         {
             Reel();
-            
         }
         else
         {
@@ -44,9 +47,18 @@ public class FishingController : MonoBehaviour
     {
         fishingControllerAnimator.SetTrigger("Reel");
         hookOccupied = false;
+        //ScareNearbyFish();
         //StartCoroutine(WaitToLift());
         
     }
+
+    //private void ScareNearbyFish()
+    //{
+    //    foreach(FishController fish in fishes)
+    //    {
+    //        fish.FishEscape();
+    //    }
+    //}
 
     //private IEnumerator WaitToLift()
     //{

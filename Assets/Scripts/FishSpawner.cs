@@ -5,6 +5,9 @@ using UnityEngine;
 public class FishSpawner : MonoBehaviour
 {
     [SerializeField] GameObject fishPrefab;
+    public List<FishController> fishes = new List<FishController>();
+
+    private GameObject newFish;
 
     private void Start()
     {
@@ -15,7 +18,8 @@ public class FishSpawner : MonoBehaviour
     {
         foreach(Transform child in transform)
         {
-            Instantiate(fishPrefab, child);
+            newFish = Instantiate(fishPrefab, child);
+            fishes.Add(newFish.GetComponent<FishController>());
         }
     }
 }
