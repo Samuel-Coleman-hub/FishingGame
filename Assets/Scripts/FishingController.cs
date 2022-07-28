@@ -1,29 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class FishingController : MonoBehaviour
 {
-
-    [SerializeField] GameManager gameManager;
     [SerializeField] FishSpawner fishSpawner;
+    [SerializeField] GameObject hookContainerObj;
+    [SerializeField] GameObject hookObj;
 
     public bool hookOccupied = false;
     public bool casting = false;
 
-    private Animator fishingControllerAnimator;
-    private Animator hookBobAnimator;
+    private PlayerInput playerInput;
+    private Animator hookContainerAnimator;
+    private Animator hookAnimator;
+
+    private InputAction fish;
+
+    private ThirdPersonMovement movement;
 
     //private List<FishController> fishes = new List<FishController>();
 
-    private void Start()
+    private void Awake()
     {
-        fishingControllerAnimator = GetComponent<Animator>();
-        hookBobAnimator = transform.parent.GetComponent<Animator>();
-       // fishes = fishSpawner.fishes;
+        playerInput = GetComponent<PlayerInput>();
+        fish = playerInput.actions["Fish"];
+        fish.started += Fishing;
     }
 
-    public void Fishing()
+    private void Start()
+    {
+        hookContainerAnimator = hookContainerObj.GetComponent<Animator>();
+        hookAnimator = hookObj.GetComponent<Animator>();
+        movement = GetComponent<ThirdPersonMovement>();
+    }
+
+    private void Fishing(InputAction.CallbackContext context)
     {
         if (casting)
         {
@@ -37,15 +50,14 @@ public class FishingController : MonoBehaviour
 
     private void Cast()
     {
-        fishingControllerAnimator.SetTrigger("Cast");
-        //hookBobAnimator.SetTrigger("Rise");
-        gameManager.ToggleMovement();
+        hookAnimator.SetTrigger("Cast");
+        movement.enabled = false;
         casting = true;
     }
 
     public void Reel()
     {
-        fishingControllerAnimator.SetTrigger("Reel");
+        hookAnimator.SetTrigger("Reel");
         hookOccupied = false;
         //ScareNearbyFish();
         //StartCoroutine(WaitToLift());
@@ -71,18 +83,18 @@ public class FishingController : MonoBehaviour
     //Called at the end of th Reel Animation
     private void ResetAfterReel()
     {
-        hookBobAnimator.SetTrigger("Rise");
-        gameManager.ToggleMovement();
+        hookContainerAnimator.SetTrigger("Rise");
+        movement.enabled = true;
         casting = false;
     }
 
     public void BobHook()
     {
-        hookBobAnimator.SetTrigger("Bob");
+        hookContainerAnimator.SetTrigger("Bob");
     }
 
     public void SinkHook()
     {
-        hookBobAnimator.SetTrigger("Sink");
+        hookContainerAnimator.SetTrigger("Sink");
     }
 }

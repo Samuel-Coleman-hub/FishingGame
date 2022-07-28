@@ -53,6 +53,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Fish"",
+                    ""type"": ""Button"",
+                    ""id"": ""4e7aafac-8d86-4fe5-bafc-9abda20a44e7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -165,6 +174,28 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""16030bf8-d4f3-4997-a352-7b0cdc5ed668"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Fish"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""18301b2c-2283-4e2b-bbca-a12b8c1f8c14"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Fish"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -176,6 +207,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_CharacterControls_Move = m_CharacterControls.FindAction("Move", throwIfNotFound: true);
         m_CharacterControls_Jog = m_CharacterControls.FindAction("Jog", throwIfNotFound: true);
         m_CharacterControls_Jump = m_CharacterControls.FindAction("Jump", throwIfNotFound: true);
+        m_CharacterControls_Fish = m_CharacterControls.FindAction("Fish", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -238,6 +270,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_CharacterControls_Move;
     private readonly InputAction m_CharacterControls_Jog;
     private readonly InputAction m_CharacterControls_Jump;
+    private readonly InputAction m_CharacterControls_Fish;
     public struct CharacterControlsActions
     {
         private @PlayerControls m_Wrapper;
@@ -245,6 +278,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_CharacterControls_Move;
         public InputAction @Jog => m_Wrapper.m_CharacterControls_Jog;
         public InputAction @Jump => m_Wrapper.m_CharacterControls_Jump;
+        public InputAction @Fish => m_Wrapper.m_CharacterControls_Fish;
         public InputActionMap Get() { return m_Wrapper.m_CharacterControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -263,6 +297,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Jump.started -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnJump;
                 @Jump.performed -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnJump;
                 @Jump.canceled -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnJump;
+                @Fish.started -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnFish;
+                @Fish.performed -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnFish;
+                @Fish.canceled -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnFish;
             }
             m_Wrapper.m_CharacterControlsActionsCallbackInterface = instance;
             if (instance != null)
@@ -276,6 +313,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
+                @Fish.started += instance.OnFish;
+                @Fish.performed += instance.OnFish;
+                @Fish.canceled += instance.OnFish;
             }
         }
     }
@@ -285,5 +325,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnJog(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnFish(InputAction.CallbackContext context);
     }
 }

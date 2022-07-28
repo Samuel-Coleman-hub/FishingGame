@@ -53,7 +53,7 @@ public class FishController : MonoBehaviour
     private void Awake()
     {
         hook = GameObject.FindGameObjectWithTag("Hook").transform;
-        fishingController = hook.gameObject.GetComponent<FishingController>();
+        fishingController = GameObject.FindGameObjectWithTag("Player").GetComponent<FishingController>();
         agent = GetComponent<NavMeshAgent>();
         obstacle = GetComponent<NavMeshObstacle>();
         animator = GetComponent<Animator>();
