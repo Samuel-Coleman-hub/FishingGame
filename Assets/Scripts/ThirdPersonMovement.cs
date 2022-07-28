@@ -32,6 +32,8 @@ public class ThirdPersonMovement : MonoBehaviour
     private bool isMovementPressed;
     private bool isJogPressed;
 
+    private Vector2 input;
+
     private void Start()
     {
         controller = GetComponent<CharacterController>();
@@ -48,7 +50,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
     void Update()
     {
-        isMovementPressed = moveAction.IsPressed();
+        isMovementPressed = moveAction.inProgress;
         isJogPressed = jogAction.IsPressed();
         
         HandleGravity();
@@ -59,10 +61,11 @@ public class ThirdPersonMovement : MonoBehaviour
 
     private void HandleMovement()
     {
-        Vector2 input = moveAction.ReadValue<Vector2>();
+        input = moveAction.ReadValue<Vector2>();
         Vector3 move = new Vector3(input.x, 0, input.y);
         move = move.x * cameraTransform.right.normalized + move.z * cameraTransform.forward.normalized;
         move.y = 0f;
+
         if (jogAction.IsPressed())
         {
             controller.Move(playerRunSpeed * Time.deltaTime * move);
@@ -94,10 +97,13 @@ public class ThirdPersonMovement : MonoBehaviour
 
     private void HandleRotation()
     {
-        if (isMovementPressed)
+        if (input != Vector2.zero)
         {
-            Quaternion targetRotation = Quaternion.Euler(0, cameraTransform.eulerAngles.y, 0);
-            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            float targetAngle = Mathf.Atan2(input.x, input.y) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
+            Quaternion rotation = Quaternion.Euler(0f, targetAngle, 0f);
+            transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.deltaTime * rotationSpeed);
+            //Quaternion targetRotation = Quaternion.Euler(0, cameraTransform.eulerAngles.y, 0);
+            //transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
     }
 
