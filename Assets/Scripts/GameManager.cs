@@ -25,18 +25,18 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonUp("Fish") && (lookingAtWater))
-        {
-            fishingController.Fishing();
-        }
-        else if((Input.GetButtonUp("Fish")) && !lookingAtWater)
-        {
+        //if (Input.GetButtonUp("Fish") && (lookingAtWater))
+        //{
+        //    fishingController.Fishing();
+        //}
+        //else if((Input.GetButtonUp("Fish")) && !lookingAtWater)
+        //{
             
-        }
+        //}
     }
 
     public void ToggleMovement()
     {
-        movement.moving = !movement.moving;
+        movement.enabled = false;
     }
 }

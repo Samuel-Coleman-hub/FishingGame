@@ -28,15 +28,15 @@ public class WaterDetector : MonoBehaviour
             if (hit.transform.gameObject.tag == "Water")
             {
                 gameManager.lookingAtWater = true;
-                Debug.Log("Looking at water");
+                //Debug.Log("Looking at water");
             }
             else
             {
                 gameManager.lookingAtWater = false;
-                Debug.Log("Not looking at water");
+                //Debug.Log("Not looking at water");
             }
 
-            Debug.DrawRay(transform.position, Quaternion.AngleAxis(degreeOfAngle, transform.right) * transform.forward, Color.green);
+            //Debug.DrawRay(transform.position, Quaternion.AngleAxis(degreeOfAngle, transform.right) * transform.forward, Color.green);
         }
     }
 }
