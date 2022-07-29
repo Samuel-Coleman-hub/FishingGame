@@ -3377,6 +3377,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2406261933258229384, guid: baa7df5d20d83c6458b906195fe7a133,
         type: 3}
+      propertyPath: hook
+      value: 
+      objectReference: {fileID: 683853651}
+    - target: {fileID: 2406261933258229384, guid: baa7df5d20d83c6458b906195fe7a133,
+        type: 3}
       propertyPath: fishingController
       value: 
       objectReference: {fileID: 1017654370}

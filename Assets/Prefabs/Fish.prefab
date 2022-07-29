@@ -77,6 +77,7 @@ GameObject:
   - component: {fileID: 6614257404621709132}
   - component: {fileID: -4623152464809241730}
   - component: {fileID: -5241444683373972639}
+  - component: {fileID: -1605256885495331168}
   m_Layer: 0
   m_Name: Fish
   m_TagString: Untagged
@@ -128,13 +129,11 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3541794886870107189}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00365bd7709da3e49ba8a594793fb2d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fishingManager: {fileID: 2406261933258229384, guid: baa7df5d20d83c6458b906195fe7a133,
-    type: 3}
   distanceBehindFish: 2.5
   bitingSpeed: 1
   minBites: 2
@@ -206,6 +205,26 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-1605256885495331168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3541794886870107189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d55efc2f9de9ef944afacac0230cf919, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  whatIsSeaBed:
+    serializedVersion: 2
+    m_Bits: 8
+  whatIsPlayer:
+    serializedVersion: 2
+    m_Bits: 64
+  agent: {fileID: 0}
+  animator: {fileID: 0}
 --- !u!1 &5570020830322509513
 GameObject:
   m_ObjectHideFlags: 0

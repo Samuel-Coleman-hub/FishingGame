@@ -9,6 +9,7 @@ public class FishingManager : MonoBehaviour
     public bool fishingRodReeling = false;
 
     [SerializeField] FishingController fishingController;
+    [SerializeField] public GameObject hook;
 
     public void BobHook()
     {

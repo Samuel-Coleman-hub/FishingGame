@@ -58,7 +58,6 @@ public class FishingController : MonoBehaviour
         hookAnimator.SetTrigger("Cast");
         movement.enabled = false;
         fishingManager.fishingRodCast = true;
-        Debug.Log("Rod just been cast" + fishingManager.fishingRodCast);
     }
 
     public void Reel()
