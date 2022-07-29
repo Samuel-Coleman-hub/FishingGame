@@ -132,6 +132,13 @@ public class ThirdPersonMovement : MonoBehaviour
         }
     }
 
+    private void OnDisable()
+    {
+        //Set animator to idle before disabling movement
+        animator.SetBool(isJoggingHash, false);
+        animator.SetBool(isWalkingHash, false);
+    }
+
     //    //[SerializeField] CharacterController controller;
     //    //[SerializeField] Transform cam;
 

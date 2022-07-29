@@ -6,15 +6,17 @@ using UnityEngine.InputSystem;
 public class FishingController : MonoBehaviour
 {
     [SerializeField] FishSpawner fishSpawner;
+    [SerializeField] FishingManager fishingManager;
     [SerializeField] GameObject hookContainerObj;
     [SerializeField] GameObject hookObj;
-
-    public bool hookOccupied = false;
-    public bool casting = false;
 
     private PlayerInput playerInput;
     private Animator hookContainerAnimator;
     private Animator hookAnimator;
+
+    private bool fishingRodCast;
+    private bool fishAtHook;
+    private bool fishingRodReeling;
 
     private InputAction fish;
 
@@ -34,11 +36,14 @@ public class FishingController : MonoBehaviour
         hookContainerAnimator = hookContainerObj.GetComponent<Animator>();
         hookAnimator = hookObj.GetComponent<Animator>();
         movement = GetComponent<ThirdPersonMovement>();
+
+        //fishingRodCast = fishingManager.fishingRodCast;
+
     }
 
     private void Fishing(InputAction.CallbackContext context)
     {
-        if (casting)
+        if (fishingManager.fishingRodCast)
         {
             Reel();
         }
@@ -52,16 +57,17 @@ public class FishingController : MonoBehaviour
     {
         hookAnimator.SetTrigger("Cast");
         movement.enabled = false;
-        casting = true;
+        fishingManager.fishingRodCast = true;
+        Debug.Log("Rod just been cast" + fishingManager.fishingRodCast);
     }
 
     public void Reel()
     {
+        fishingManager.fishingRodReeling = true;
         hookAnimator.SetTrigger("Reel");
-        hookOccupied = false;
+        fishingManager.fishAtHook = false;
         //ScareNearbyFish();
-        //StartCoroutine(WaitToLift());
-        
+        StartCoroutine(WaitToLift());
     }
 
     //private void ScareNearbyFish()
@@ -72,20 +78,13 @@ public class FishingController : MonoBehaviour
     //    }
     //}
 
-    //private IEnumerator WaitToLift()
-    //{
-    //    yield return new WaitForSeconds(2f);
-    //    hookBobAnimator.SetTrigger("Rise");
-    //    gameManager.ToggleMovement();
-    //    casting = false;
-    //}
-
-    //Called at the end of th Reel Animation
-    private void ResetAfterReel()
+    private IEnumerator WaitToLift()
     {
+        yield return new WaitForSeconds(2f);
         hookContainerAnimator.SetTrigger("Rise");
         movement.enabled = true;
-        casting = false;
+        fishingManager.fishingRodCast = false;
+        fishingManager.fishingRodReeling = false;
     }
 
     public void BobHook()

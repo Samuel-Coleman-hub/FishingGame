@@ -8,6 +8,7 @@ TagManager:
   - Ground
   - Hook
   - Fish
+  - FishingManager
   layers:
   - Default
   - TransparentFX

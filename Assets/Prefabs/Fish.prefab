@@ -133,6 +133,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00365bd7709da3e49ba8a594793fb2d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fishingManager: {fileID: 2406261933258229384, guid: baa7df5d20d83c6458b906195fe7a133,
+    type: 3}
   distanceBehindFish: 2.5
   bitingSpeed: 1
   minBites: 2

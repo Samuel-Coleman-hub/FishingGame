@@ -426,7 +426,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
-  m_LocalRotation: {x: 0.12451124, y: -0.000000012806413, z: 0.0000000016065187, w: 0.9922182}
+  m_LocalRotation: {x: 0.12451124, y: -0.00000001280641, z: 0.0000000016065046, w: 0.9922182}
   m_LocalPosition: {x: -3.43, y: 1.6800001, z: -10.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -741,6 +741,24 @@ Transform:
   m_Father: {fileID: 543450652760475262}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &536547834 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2406261933258229385, guid: baa7df5d20d83c6458b906195fe7a133,
+    type: 3}
+  m_PrefabInstance: {fileID: 2406261932976625523}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &536547835 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2406261933258229384, guid: baa7df5d20d83c6458b906195fe7a133,
+    type: 3}
+  m_PrefabInstance: {fileID: 2406261932976625523}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7f24092e1922d24ca7cddf3381068a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &619766611
 GameObject:
   m_ObjectHideFlags: 0
@@ -1455,10 +1473,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fishSpawner: {fileID: 619766612}
+  fishingManager: {fileID: 536547835}
   hookContainerObj: {fileID: 428913257}
   hookObj: {fileID: 683853651}
-  hookOccupied: 0
-  casting: 0
 --- !u!1 &1068658698
 GameObject:
   m_ObjectHideFlags: 0
@@ -1502,7 +1519,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 536547834}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2548,7 +2566,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1795499590}
-  m_LocalRotation: {x: 0.10649046, y: -0.0000000042771364, z: 4.5807902e-10, w: 0.9943138}
+  m_LocalRotation: {x: 0.10649046, y: 0.0000000042771338, z: -4.580787e-10, w: 0.9943138}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2783,7 +2801,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2065754426}
-  m_LocalRotation: {x: 0.14253858, y: -0.000000008515345, z: 0.0000000012262865, w: 0.98978925}
+  m_LocalRotation: {x: 0.14253858, y: 0.000000008515345, z: -0.0000000012262865, w: 0.98978925}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3350,6 +3368,85 @@ Transform:
   m_Father: {fileID: 7829577705733641041}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &2406261932976625523
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1068658700}
+    m_Modifications:
+    - target: {fileID: 2406261933258229384, guid: baa7df5d20d83c6458b906195fe7a133,
+        type: 3}
+      propertyPath: fishingController
+      value: 
+      objectReference: {fileID: 1017654370}
+    - target: {fileID: 2406261933258229385, guid: baa7df5d20d83c6458b906195fe7a133,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2406261933258229385, guid: baa7df5d20d83c6458b906195fe7a133,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2406261933258229385, guid: baa7df5d20d83c6458b906195fe7a133,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2406261933258229385, guid: baa7df5d20d83c6458b906195fe7a133,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2406261933258229385, guid: baa7df5d20d83c6458b906195fe7a133,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2406261933258229385, guid: baa7df5d20d83c6458b906195fe7a133,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2406261933258229385, guid: baa7df5d20d83c6458b906195fe7a133,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2406261933258229385, guid: baa7df5d20d83c6458b906195fe7a133,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2406261933258229385, guid: baa7df5d20d83c6458b906195fe7a133,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2406261933258229385, guid: baa7df5d20d83c6458b906195fe7a133,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2406261933258229385, guid: baa7df5d20d83c6458b906195fe7a133,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2406261933258229386, guid: baa7df5d20d83c6458b906195fe7a133,
+        type: 3}
+      propertyPath: m_Name
+      value: FishingManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 2406261933258229386, guid: baa7df5d20d83c6458b906195fe7a133,
+        type: 3}
+      propertyPath: m_TagString
+      value: FishingManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: baa7df5d20d83c6458b906195fe7a133, type: 3}
 --- !u!4 &2412161366647942589
 Transform:
   m_ObjectHideFlags: 0
