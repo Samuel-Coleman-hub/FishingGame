@@ -4,9 +4,6 @@ using UnityEngine.AI;
 
 public class FishPatrollingState : FishBaseState
 {
-    private Vector3 swimPoint;
-    private bool swimPointSet = false;
-
     private bool hookInSightRange;
 
     private FishStateManager fish;
@@ -42,33 +39,20 @@ public class FishPatrollingState : FishBaseState
 
     private void Patrolling(FishStateManager fish)
     {
-        if (!swimPointSet)
+        if (!fish.swimPointSet)
         {
-            FindSwimPoint(fish);
+            fish.FindSwimPoint();
         }
         else
         {
-            agent.SetDestination(swimPoint);
+            agent.SetDestination(fish.swimPoint);
         }
 
-        Vector3 distanceToSwimPoint = fish.transform.position - swimPoint;
+        Vector3 distanceToSwimPoint = fish.transform.position - fish.swimPoint;
 
         if (distanceToSwimPoint.magnitude < 1f)
         {
-            swimPointSet = false;
-        }
-    }
-
-    private void FindSwimPoint(FishStateManager fish)
-    {
-        float randomZ = Random.Range(-fish.swimPointRange, fish.swimPointRange);
-        float randomX = Random.Range(-fish.swimPointRange, fish.swimPointRange);
-
-        swimPoint = new Vector3(fish.transform.position.x + randomX, fish.transform.position.y, fish.transform.position.z + randomZ);
-
-        if (NavMesh.SamplePosition(swimPoint, out NavMeshHit hit, 1f, NavMesh.AllAreas))
-        {
-            swimPointSet = true;
+            fish.swimPointSet = false;
         }
     }
 }
