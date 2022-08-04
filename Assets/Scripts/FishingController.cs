@@ -47,7 +47,7 @@ public class FishingController : MonoBehaviour
         {
             Reel();
         }
-        else
+        else if(!fishingManager.fishingRodCast && fishingManager.lookingAtWater)
         {
             Cast();
         }

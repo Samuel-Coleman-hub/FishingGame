@@ -49,7 +49,7 @@ public class GamepadCursor : MonoBehaviour
     {
         if (virtualMouse != null && virtualMouse.added) 
         {
-            playerInput.user.UnpairDevice(virtualMouse);
+            //playerInput.user.UnpairDevice(virtualMouse.device);
             InputSystem.RemoveDevice(virtualMouse);
         } 
 
@@ -99,6 +99,7 @@ public class GamepadCursor : MonoBehaviour
 
     private void OnControlsChanged(PlayerInput input)
     {
+        Debug.Log("Change controls");
         if(playerInput.currentControlScheme == mouseScheme && previousControlScheme != mouseScheme)
         {
             cursorTransform.gameObject.SetActive(false);

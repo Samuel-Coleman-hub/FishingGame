@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WaterDetector : MonoBehaviour
 {
-    [SerializeField] GameManager gameManager;
+    [SerializeField] FishingManager fishingManager;
 
     [SerializeField] int degreeOfAngle = 20;
 
@@ -27,12 +27,12 @@ public class WaterDetector : MonoBehaviour
 
             if (hit.transform.gameObject.tag == "Water")
             {
-                gameManager.lookingAtWater = true;
+                fishingManager.lookingAtWater = true;
                 //Debug.Log("Looking at water");
             }
             else
             {
-                gameManager.lookingAtWater = false;
+                fishingManager.lookingAtWater = false;
                 //Debug.Log("Not looking at water");
             }
 

@@ -8,6 +8,8 @@ public class FishingManager : MonoBehaviour
     public bool fishAtHook = false;
     public bool fishingRodReeling = false;
 
+    public bool lookingAtWater = false;
+
     [SerializeField] FishingController fishingController;
     [SerializeField] public GameObject hook;
 

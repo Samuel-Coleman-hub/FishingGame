@@ -33,7 +33,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Open Scrapbook",
+                    "name": "Trigger Scrapbook",
                     "type": "Button",
                     "id": "0a2a74c3-982e-45cd-bc70-aa5ca51ccb1e",
                     "expectedControlType": "Button",
@@ -137,8 +137,8 @@
                     "path": "<Keyboard>/tab",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Gamepad",
-                    "action": "Open Scrapbook",
+                    "groups": "",
+                    "action": "Trigger Scrapbook",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -149,7 +149,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Open Scrapbook",
+                    "action": "Trigger Scrapbook",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
