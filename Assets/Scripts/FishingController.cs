@@ -9,10 +9,13 @@ public class FishingController : MonoBehaviour
     [SerializeField] FishingManager fishingManager;
     [SerializeField] GameObject hookContainerObj;
     [SerializeField] GameObject hookObj;
+    [SerializeField] GameObject fishingRodObj;
 
     private PlayerInput playerInput;
+    private Animator playerAnimator;
     private Animator hookContainerAnimator;
     private Animator hookAnimator;
+    private Animator fishingRodAnimator;
 
     private bool fishingRodCast;
     private bool fishAtHook;
@@ -36,6 +39,7 @@ public class FishingController : MonoBehaviour
         hookContainerAnimator = hookContainerObj.GetComponent<Animator>();
         hookAnimator = hookObj.GetComponent<Animator>();
         movement = GetComponent<ThirdPersonMovement>();
+        playerAnimator = GetComponent<Animator>();
 
         //fishingRodCast = fishingManager.fishingRodCast;
 
@@ -56,6 +60,8 @@ public class FishingController : MonoBehaviour
     private void Cast()
     {
         hookAnimator.SetTrigger("Cast");
+        playerAnimator.SetTrigger("Cast");
+        //fishingRodAnimator.SetTrigger("Cast");
         movement.enabled = false;
         fishingManager.fishingRodCast = true;
     }
@@ -64,6 +70,8 @@ public class FishingController : MonoBehaviour
     {
         fishingManager.fishingRodReeling = true;
         hookAnimator.SetTrigger("Reel");
+        playerAnimator.SetTrigger("Reel");
+        //fishingRodAnimator.SetTrigger("Reel");
         fishingManager.fishAtHook = false;
         //ScareNearbyFish();
         StartCoroutine(WaitToLift());
