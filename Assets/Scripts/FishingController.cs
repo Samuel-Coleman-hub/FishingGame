@@ -10,6 +10,10 @@ public class FishingController : MonoBehaviour
     [SerializeField] GameObject hookContainerObj;
     [SerializeField] GameObject hookObj;
     [SerializeField] GameObject fishingRodObj;
+    [SerializeField] Transform topOfFishingRod;
+
+    [SerializeField] Transform[] hookPoints;
+    [SerializeField] float[] hookThrowSpeeds;
 
     private PlayerInput playerInput;
     private Animator playerAnimator;
@@ -24,6 +28,9 @@ public class FishingController : MonoBehaviour
     private InputAction fish;
 
     private ThirdPersonMovement movement;
+    private LineRenderer lineRenderer;
+
+    private Vector3 waterRelativePos;
 
     //private List<FishController> fishes = new List<FishController>();
 
@@ -41,8 +48,9 @@ public class FishingController : MonoBehaviour
         movement = GetComponent<ThirdPersonMovement>();
         playerAnimator = GetComponent<Animator>();
 
-        //fishingRodCast = fishingManager.fishingRodCast;
+        fishingRodCast = fishingManager.fishingRodCast;
 
+        waterRelativePos = hookPoints[hookPoints.Length -1].transform.InverseTransformPoint(0,0, 409);
     }
 
     private void Fishing(InputAction.CallbackContext context)
@@ -59,7 +67,13 @@ public class FishingController : MonoBehaviour
 
     private void Cast()
     {
-        hookAnimator.SetTrigger("Cast");
+        hookObj.GetComponent<Rigidbody>().AddForce(gameObject.transform.forward * 100);
+
+        //Detach child hook from armature when casting
+        hookContainerObj.transform.parent = this.transform;
+
+        //hookAnimator.SetTrigger("Cast");
+        StartCoroutine(ThrowHook());
         playerAnimator.SetTrigger("Cast");
         //fishingRodAnimator.SetTrigger("Cast");
         movement.enabled = false;
@@ -84,6 +98,29 @@ public class FishingController : MonoBehaviour
     //        fish.FishEscape();
     //    }
     //}
+
+    private IEnumerator ThrowHook()
+    {
+        int i = 0;
+        //hookPoints[hookPoints.Length -1].position = new Vector3(hookPoints[hookPoints.Length -1].position.x, waterRelativePos.y, hookPoints[hookPoints.Length -1].position.z);
+
+        foreach(Transform pos in hookPoints)
+        { 
+            float time = 0;
+            float duration = hookThrowSpeeds[i];
+            Vector3 startPosition = hookContainerObj.transform.position;
+
+            while (time < duration)
+            {
+                hookContainerObj.transform.position = Vector3.Lerp(startPosition, pos.position, time / duration);
+                time += Time.deltaTime;
+                yield return null;
+            }
+            hookContainerObj.transform.position = pos.position;
+            i++;
+        }
+        
+    }
 
     private IEnumerator WaitToLift()
     {
