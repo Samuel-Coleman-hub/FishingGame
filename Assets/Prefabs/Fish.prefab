@@ -73,7 +73,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4210068521389940367}
   - component: {fileID: 7821916748566594805}
-  - component: {fileID: 2533518935727666298}
   - component: {fileID: 6614257404621709132}
   - component: {fileID: -4623152464809241730}
   - component: {fileID: -5241444683373972639}
@@ -122,35 +121,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &2533518935727666298
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3541794886870107189}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00365bd7709da3e49ba8a594793fb2d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  distanceBehindFish: 2.5
-  bitingSpeed: 1
-  minBites: 2
-  maxBites: 6
-  waitTimeToCatch: 3
-  idleTimeMin: 1
-  idleTimeMax: 6
-  swimPoint: {x: 0, y: 0, z: 0}
-  swimPointRange: 3
-  whatIsSeaBed:
-    serializedVersion: 2
-    m_Bits: 8
-  whatIsPlayer:
-    serializedVersion: 2
-    m_Bits: 64
-  sightRange: 3
-  hookInSightRange: 0
 --- !u!195 &6614257404621709132
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -222,9 +192,24 @@ MonoBehaviour:
     m_Bits: 8
   whatIsPlayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 256
+  fishingManager: {fileID: 0}
+  rb: {fileID: 0}
   agent: {fileID: 0}
   animator: {fileID: 0}
+  hook: {fileID: 0}
+  hookHinge: {fileID: 0}
+  thisFishToHook: 0
+  swimPointRange: 3
+  sightRange: 3
+  waitTimeToDie: 4
+  swimPoint: {x: 0, y: 0, z: 0}
+  swimPointSet: 0
+  minBites: 2
+  maxBites: 5
+  distanceToMoveWhenBiting: 2.5
+  bitingSpeed: 1
+  waitTimeToCatch: 3
 --- !u!1 &5570020830322509513
 GameObject:
   m_ObjectHideFlags: 0

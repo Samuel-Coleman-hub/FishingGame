@@ -10,7 +10,7 @@ public class FishingController : MonoBehaviour
     [SerializeField] GameObject hookContainerObj;
     [SerializeField] GameObject hookObj;
     [SerializeField] GameObject fishingRodObj;
-    [SerializeField] Transform topOfFishingRod;
+    [SerializeField] Transform hookHolder;
 
     [SerializeField] Transform[] hookPoints;
     [SerializeField] float[] hookThrowSpeeds;
@@ -30,8 +30,6 @@ public class FishingController : MonoBehaviour
     private ThirdPersonMovement movement;
     private LineRenderer lineRenderer;
 
-    private Vector3 waterRelativePos;
-
     //private List<FishController> fishes = new List<FishController>();
 
     private void Awake()
@@ -49,8 +47,6 @@ public class FishingController : MonoBehaviour
         playerAnimator = GetComponent<Animator>();
 
         fishingRodCast = fishingManager.fishingRodCast;
-
-        waterRelativePos = hookPoints[hookPoints.Length -1].transform.InverseTransformPoint(0,0, 409);
     }
 
     private void Fishing(InputAction.CallbackContext context)
@@ -83,12 +79,12 @@ public class FishingController : MonoBehaviour
     public void Reel()
     {
         fishingManager.fishingRodReeling = true;
-        hookAnimator.SetTrigger("Reel");
+        StartCoroutine(ThrowHook());
         playerAnimator.SetTrigger("Reel");
-        //fishingRodAnimator.SetTrigger("Reel");
         fishingManager.fishAtHook = false;
+        //fishingRodAnimator.SetTrigger("Reel");
         //ScareNearbyFish();
-        StartCoroutine(WaitToLift());
+        //StartCoroutine(WaitToLift());
     }
 
     //private void ScareNearbyFish()
@@ -101,43 +97,56 @@ public class FishingController : MonoBehaviour
 
     private IEnumerator ThrowHook()
     {
-        int i = 0;
-        //hookPoints[hookPoints.Length -1].position = new Vector3(hookPoints[hookPoints.Length -1].position.x, waterRelativePos.y, hookPoints[hookPoints.Length -1].position.z);
-
-        foreach(Transform pos in hookPoints)
-        { 
+        if (fishingManager.fishingRodReeling)
+        {
+            System.Array.Reverse(hookPoints);
+        }
+        
+        for (int i = 0; i < hookPoints.Length; i++)
+        {
             float time = 0;
             float duration = hookThrowSpeeds[i];
             Vector3 startPosition = hookContainerObj.transform.position;
 
             while (time < duration)
             {
-                hookContainerObj.transform.position = Vector3.Lerp(startPosition, pos.position, time / duration);
+                hookContainerObj.transform.position = Vector3.Lerp(startPosition, hookPoints[i].position, time / duration);
                 time += Time.deltaTime;
                 yield return null;
             }
-            hookContainerObj.transform.position = pos.position;
-            i++;
+            hookContainerObj.transform.position = hookPoints[i].position;
         }
-        
+
+        if (fishingManager.fishingRodReeling)
+        {
+            System.Array.Reverse(hookPoints);
+            hookAnimator.SetTrigger("Rise");
+            hookContainerObj.transform.parent = hookHolder.transform;
+            hookContainerObj.transform.position = hookHolder.position;
+            movement.enabled = true;
+            fishingManager.fishingRodCast = false;
+            fishingManager.fishingRodReeling = false;
+        }
     }
 
-    private IEnumerator WaitToLift()
-    {
-        yield return new WaitForSeconds(2f);
-        hookContainerAnimator.SetTrigger("Rise");
-        movement.enabled = true;
-        fishingManager.fishingRodCast = false;
-        fishingManager.fishingRodReeling = false;
-    }
+    //private IEnumerator WaitToLift()
+    //{
+    //    yield return new WaitForSeconds(2f);
+    //    hookContainerAnimator.SetTrigger("Rise");
+    //    movement.enabled = true;
+    //    fishingManager.fishingRodCast = false;
+    //    fishingManager.fishingRodReeling = false;
+    //}
 
     public void BobHook()
     {
-        hookContainerAnimator.SetTrigger("Bob");
+        Debug.Log("Bob");
+        hookAnimator.SetTrigger("Bob");
     }
 
     public void SinkHook()
     {
-        hookContainerAnimator.SetTrigger("Sink");
+        Debug.Log("Sink");
+        hookAnimator.SetTrigger("Sink");
     }
 }

@@ -81,4 +81,11 @@ public class FishStateManager : MonoBehaviour
             swimPointSet = true;
         }
     }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, sightRange);
+    }
+
 }

@@ -6,7 +6,7 @@ public class WaterDetector : MonoBehaviour
 {
     [SerializeField] FishingManager fishingManager;
 
-    [SerializeField] int degreeOfAngle = 20;
+    [SerializeField] int degreeOfAngle = 25;
 
     private float lastCallTime = 1;
     private RaycastHit hit;
@@ -36,7 +36,7 @@ public class WaterDetector : MonoBehaviour
                 //Debug.Log("Not looking at water");
             }
 
-            //Debug.DrawRay(transform.position, Quaternion.AngleAxis(degreeOfAngle, transform.right) * transform.forward, Color.green);
+            //Debug.DrawRay(transform.position, Quaternion.AngleAxis(degreeOfAngle, transform.right) * transform.forward * 20, Color.green);
         }
     }
 }

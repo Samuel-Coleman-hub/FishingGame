@@ -32,6 +32,10 @@ public class FishPatrollingState : FishBaseState
         }
         else if(fishingManager.fishingRodCast && (!fishingManager.fishAtHook || fish.thisFishToHook))
         {
+            Debug.Log("Hook is in sight switching state" + "is fishing rod casting: " + fishingManager.fishingRodCast);
+            Debug.Log("is fish at hook + " + fishingManager.fishAtHook);
+            Debug.Log("is this fish at hook " + fish.thisFishToHook);
+            Debug.Log("is hook in sight range " + hookInSightRange);
             fish.SwitchState(fish.swimToHookState);
         }
         
