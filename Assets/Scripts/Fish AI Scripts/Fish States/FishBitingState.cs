@@ -3,6 +3,7 @@ using UnityEngine;
 public class FishBitingState : FishBaseState
 {
     private Vector3[] bitingPositions = new Vector3[2];
+    private FishingManager fishingManager;
 
     private Transform hook;
     private int bitingState = 0;
@@ -11,6 +12,7 @@ public class FishBitingState : FishBaseState
 
     public override void EnterState(FishStateManager fish)
     {
+        fishingManager = fish.fishingManager;
         hook = fish.fishingManager.hook.transform;
 
         StartBitingSequence(fish);
@@ -18,14 +20,21 @@ public class FishBitingState : FishBaseState
 
     public override void UpdateState(FishStateManager fish)
     {
-        BitingHook(fish);
+        if (!fishingManager.fishingRodCast) 
+        {
+            fish.SwitchState(fish.escapeState);
+        }
+        else
+        {
+            BitingHook(fish);
+        }
     }
 
     private void StartBitingSequence(FishStateManager fish)
     {
         fish.fishingManager.BobHook();
         Vector3 behindFish = fish.transform.position - (fish.transform.forward * fish.distanceToMoveWhenBiting);
-        Vector3 hookPos = new Vector3(hook.position.x, hook.position.y, hook.position.z);
+        Vector3 hookPos = new Vector3(hook.position.x, fish.transform.position.y, hook.position.z);
 
         biteCounter = 0;
         totalBites = Random.Range(fish.minBites, fish.maxBites);
@@ -50,7 +59,6 @@ public class FishBitingState : FishBaseState
 
                 if (biteCounter <= totalBites)
                 {
-                    //bobber.BobHook();
                     fish.fishingManager.BobHook();
                 }
                 else

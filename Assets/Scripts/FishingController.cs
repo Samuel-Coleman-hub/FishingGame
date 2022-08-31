@@ -14,6 +14,7 @@ public class FishingController : MonoBehaviour
 
     [SerializeField] Transform[] hookPoints;
     [SerializeField] float[] hookThrowSpeeds;
+    [SerializeField] float hookThrowWaitTime;
 
     private PlayerInput playerInput;
     private Animator playerAnimator;
@@ -24,6 +25,7 @@ public class FishingController : MonoBehaviour
     private bool fishingRodCast;
     private bool fishAtHook;
     private bool fishingRodReeling;
+    private bool stateChanging;
 
     private InputAction fish;
 
@@ -51,11 +53,11 @@ public class FishingController : MonoBehaviour
 
     private void Fishing(InputAction.CallbackContext context)
     {
-        if (fishingManager.fishingRodCast)
+        if (fishingManager.fishingRodCast && !stateChanging)
         {
             Reel();
         }
-        else if(!fishingManager.fishingRodCast && fishingManager.lookingAtWater)
+        else if(!fishingManager.fishingRodCast && fishingManager.lookingAtWater && !stateChanging)
         {
             Cast();
         }
@@ -63,13 +65,11 @@ public class FishingController : MonoBehaviour
 
     private void Cast()
     {
-        hookObj.GetComponent<Rigidbody>().AddForce(gameObject.transform.forward * 100);
-
+        stateChanging = true;
         //Detach child hook from armature when casting
-        hookContainerObj.transform.parent = this.transform;
-
         //hookAnimator.SetTrigger("Cast");
-        StartCoroutine(ThrowHook());
+        //StartCoroutine(ThrowHook());
+        StartCoroutine(WaitToThrow());
         playerAnimator.SetTrigger("Cast");
         //fishingRodAnimator.SetTrigger("Cast");
         movement.enabled = false;
@@ -78,6 +78,7 @@ public class FishingController : MonoBehaviour
 
     public void Reel()
     {
+        stateChanging = true;
         fishingManager.fishingRodReeling = true;
         StartCoroutine(ThrowHook());
         playerAnimator.SetTrigger("Reel");
@@ -97,6 +98,8 @@ public class FishingController : MonoBehaviour
 
     private IEnumerator ThrowHook()
     {
+        hookContainerObj.transform.parent = this.transform;
+
         if (fishingManager.fishingRodReeling)
         {
             System.Array.Reverse(hookPoints);
@@ -115,6 +118,7 @@ public class FishingController : MonoBehaviour
                 yield return null;
             }
             hookContainerObj.transform.position = hookPoints[i].position;
+            hookContainerObj.transform.rotation = Quaternion.identity;
         }
 
         if (fishingManager.fishingRodReeling)
@@ -127,6 +131,15 @@ public class FishingController : MonoBehaviour
             fishingManager.fishingRodCast = false;
             fishingManager.fishingRodReeling = false;
         }
+
+        stateChanging = false;
+    }
+
+    private IEnumerator WaitToThrow()
+    {
+        yield return new WaitForSeconds(hookThrowWaitTime);
+        StartCoroutine(ThrowHook());
+
     }
 
     //private IEnumerator WaitToLift()

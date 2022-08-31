@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5930604864137665451}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Bone.001_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3693400275032037164}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Bone.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -77,7 +77,7 @@ GameObject:
   - component: {fileID: -4623152464809241730}
   - component: {fileID: -5241444683373972639}
   - component: {fileID: -1605256885495331168}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Fish
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -193,23 +193,25 @@ MonoBehaviour:
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 256
+  thisFishToHook: 0
+  swimPoint: {x: 0, y: 0, z: 0}
+  swimPointSet: 0
+  fishMesh: {fileID: 7775142065747277240}
+  typeOfFish: 0
+  swimPointRange: 3
+  sightRange: 3
+  waitTimeToDie: 4
+  minBites: 2
+  maxBites: 5
+  distanceToMoveWhenBiting: 2.5
+  bitingSpeed: 1
+  waitTimeToCatch: 3
   fishingManager: {fileID: 0}
   rb: {fileID: 0}
   agent: {fileID: 0}
   animator: {fileID: 0}
   hook: {fileID: 0}
   hookHinge: {fileID: 0}
-  thisFishToHook: 0
-  swimPointRange: 3
-  sightRange: 3
-  waitTimeToDie: 4
-  swimPoint: {x: 0, y: 0, z: 0}
-  swimPointSet: 0
-  minBites: 2
-  maxBites: 5
-  distanceToMoveWhenBiting: 2.5
-  bitingSpeed: 1
-  waitTimeToCatch: 3
 --- !u!1 &5570020830322509513
 GameObject:
   m_ObjectHideFlags: 0
@@ -219,7 +221,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8879710326893741592}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Fish
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -251,7 +253,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2154675577488023776}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Bone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -284,7 +286,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6207614212979270147}
   - component: {fileID: 7494197817543072745}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: FishMesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -13,7 +13,14 @@ public class FishSwimToHookState : FishBaseState
 
     public override void UpdateState(FishStateManager fish)
     {
-        SwimToHook(fish);
+        if (fishingManager.fishingRodCast)
+        {
+            SwimToHook(fish);
+        }
+        else
+        {
+            fish.SwitchState(fish.patrollingState);
+        }
     }
 
     private void SwimToHook(FishStateManager fish)

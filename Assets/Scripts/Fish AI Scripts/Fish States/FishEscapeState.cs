@@ -17,7 +17,7 @@ public class FishEscapeState : FishBaseState
             stopWatch += Time.deltaTime;
             if(stopWatch >= fish.waitTimeToDie)
             {
-                GameObject.Destroy(fish);
+                GameObject.Destroy(fish.gameObject);
             }
         }
     }
@@ -25,6 +25,7 @@ public class FishEscapeState : FishBaseState
     public void FishEscape(FishStateManager fish)
     {
         fish.agent.enabled = true;
+        fish.swimPointRange = 15f;
         fish.FindSwimPoint();
         fish.agent.speed *= 4;
         fish.agent.SetDestination(fish.swimPoint);

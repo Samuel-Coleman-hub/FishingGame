@@ -10,6 +10,7 @@ public class FishingManager : MonoBehaviour
 
     public bool lookingAtWater = false;
 
+    [SerializeField] GameManager gameManager;
     [SerializeField] FishingController fishingController;
     [SerializeField] public GameObject hook;
 
@@ -25,6 +26,15 @@ public class FishingManager : MonoBehaviour
     
     public void TriggerReel()
     {
-        fishingController.Reel();
+        if (fishingRodCast)
+        {
+            fishingController.Reel();
+        }
+    }
+
+    public void FishCaught((string, GameObject) fishData)
+    {
+        StartCoroutine(gameManager.BlurScreen());
+        Debug.Log(fishData.Item1);
     }
 }

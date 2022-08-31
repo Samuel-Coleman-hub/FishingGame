@@ -18,6 +18,7 @@ public class FishReelState : FishBaseState
             if(stopWatch >= 3f)
             {
                 GameObject.Destroy(fish.gameObject);
+                fish.fishingManager.FishCaught(fish.fishData);
             }
         }
     }

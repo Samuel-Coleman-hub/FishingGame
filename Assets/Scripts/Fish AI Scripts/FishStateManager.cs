@@ -8,6 +8,7 @@ public class FishStateManager : MonoBehaviour
     //References the active state in the state machine
     FishBaseState currentState;
 
+    //State References
     public FishPatrollingState patrollingState = new FishPatrollingState();
     public FishSwimToHookState swimToHookState = new FishSwimToHookState();
     public FishBitingState bitingState = new FishBitingState();
@@ -15,34 +16,54 @@ public class FishStateManager : MonoBehaviour
     public FishReelState reelState = new FishReelState();
     public FishEscapeState escapeState = new FishEscapeState();
 
-    //Fish Variables
-    [SerializeField] public LayerMask whatIsSeaBed, whatIsPlayer;
-    public FishingManager fishingManager;
-    public Rigidbody rb;
-    public NavMeshAgent agent;
-    public Animator animator;
-    public GameObject hook;
-    public HingeJoint hookHinge;
+    //StateMachine Settings
+    [Header("State Machine Settings")]
+    [SerializeField] public LayerMask whatIsSeaBed;
+    [SerializeField] public LayerMask whatIsPlayer;
+    [HideInInspector] public bool thisFishToHook;
+    [HideInInspector] public Vector3 swimPoint;
+    [HideInInspector] public bool swimPointSet = false;
 
-    public bool thisFishToHook;
 
+    
+    //Individual Fish Settings
+    public enum Fishes
+    {
+        Seabass,
+        normal
+    };
+
+    [Header("Unique Fish Settings")]
+    [SerializeField] public GameObject fishMesh;
+    [SerializeField] public Fishes typeOfFish = Fishes.Seabass;
     //Fish movement
+    [Header("Fish Movement Settings")]
     [SerializeField] public float swimPointRange = 3f;
     [SerializeField] public float sightRange = 3f;
-    [SerializeField] public float waitTimeToDie = 4f;
-
-    public Vector3 swimPoint;
-    public bool swimPointSet = false;
-
+    [SerializeField] public float waitTimeToDie = 3f;
     //Fish biting variables
+    [Header("Fish Biting Settings")]
     [SerializeField] public int minBites = 2, maxBites = 5;
     [SerializeField] public float distanceToMoveWhenBiting = 2.5f;
     [SerializeField] public float bitingSpeed = 1f;
     [SerializeField] public float waitTimeToCatch = 3f;
 
+    //Fish Component Variables
+    [HideInInspector] public FishingManager fishingManager;
+    [HideInInspector] public Rigidbody rb;
+    [HideInInspector] public NavMeshAgent agent;
+    [HideInInspector] public Animator animator;
+    [HideInInspector] public GameObject hook;
+    [HideInInspector] public HingeJoint hookHinge;
+
+    public (string, GameObject) fishData;
+
     // Start is called before the first frame update
     void Start()
     {
+        //Tuple of data to be passed when caught
+        fishData = (typeOfFish.ToString(), fishMesh);
+
         //Get Components
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>(); 

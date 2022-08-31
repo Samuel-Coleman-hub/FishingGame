@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,6 +13,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject scrapbookObj;
     [SerializeField] GameObject canvasObj;
     [SerializeField] GameObject playerCamera;
+
+    [SerializeField] Volume volume;
 
     private PlayerInput playerInput;
     private ThirdPersonMovement movement;
@@ -63,21 +67,22 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    public IEnumerator BlurScreen()
     {
-        //if (Input.GetButtonUp("Fish") && (lookingAtWater))
-        //{
-        //    fishingController.Fishing();
-        //}
-        //else if((Input.GetButtonUp("Fish")) && !lookingAtWater)
-        //{
-            
-        //}
-    }
+        float time = 0;
+        float duration = 1f;
+        float startValue = 19f;
+        float endValue = 28f;
 
-    public void ToggleMovement()
-    {
-        movement.enabled = false;
+        if (volume.profile.TryGet<DepthOfField>(out var depth))
+        {
+            while (time < duration)
+            {
+                depth.focalLength.value = Mathf.Lerp(startValue, endValue, time / duration);
+                time += Time.deltaTime;
+                yield return null;
+            }
+        }
+
     }
 }
