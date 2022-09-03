@@ -25,8 +25,6 @@ public class FishSwimToHookState : FishBaseState
 
     private void SwimToHook(FishStateManager fish)
     {
-        fish.fishingManager.fishAtHook = true;
-        fish.thisFishToHook = true;
         fish.agent.SetDestination(hookPos.position);
 
         Vector3 distanceToHook = fish.transform.position - hookPos.position;

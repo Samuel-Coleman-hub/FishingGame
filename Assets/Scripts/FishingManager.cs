@@ -13,6 +13,7 @@ public class FishingManager : MonoBehaviour
     [SerializeField] GameManager gameManager;
     [SerializeField] FishingController fishingController;
     [SerializeField] public GameObject hook;
+    [SerializeField] FishTracker fishTracker;
 
     public void BobHook()
     {
@@ -32,9 +33,18 @@ public class FishingManager : MonoBehaviour
         }
     }
 
-    public void FishCaught((string, GameObject) fishData)
+    public void FishCaught((FishTracker.Fishes, GameObject) fishData)
     {
-        StartCoroutine(gameManager.BlurScreen());
-        Debug.Log(fishData.Item1);
+        gameManager.DisplayCaughtFishUI(fishData);
+
+        if (fishTracker.HasNewFishBeenCaught(fishData.Item1)) 
+        {
+            Debug.Log("new fish caught");
+        }
+        else
+        {
+            Debug.Log("Already got this fish");
+        }
+        //Add fish caught to a dictionary of fish and mark as caught
     }
 }

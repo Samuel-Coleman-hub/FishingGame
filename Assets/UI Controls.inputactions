@@ -24,6 +24,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "CloseFishUI",
+                    "type": "PassThrough",
+                    "id": "59908dcd-0d8b-4bf8-9126-e76029b2afc1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "ScrollWheel",
                     "type": "PassThrough",
                     "id": "fe6c5a85-f67d-467c-9af2-c82c5a0fe5d4",
@@ -150,6 +159,39 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Trigger Scrapbook",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "667d3e53-340b-4c2b-89c1-de7f4fe01eb4",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CloseFishUI",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4e82f671-01c6-4bdf-a8bd-f70c3b84147f",
+                    "path": "<Pen>/tip",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CloseFishUI",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e9194ca4-c6da-4efe-bb58-ce3cb92422e6",
+                    "path": "<VirtualMouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "CloseFishUI",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

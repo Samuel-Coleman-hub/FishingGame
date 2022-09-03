@@ -32,6 +32,8 @@ public class FishPatrollingState : FishBaseState
         }
         else if(fishingManager.fishingRodCast && (!fishingManager.fishAtHook || fish.thisFishToHook))
         {
+            fish.fishingManager.fishAtHook = true;
+            fish.thisFishToHook = true;
             fish.SwitchState(fish.swimToHookState);
         }
         

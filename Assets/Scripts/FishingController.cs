@@ -153,13 +153,11 @@ public class FishingController : MonoBehaviour
 
     public void BobHook()
     {
-        Debug.Log("Bob");
         hookAnimator.SetTrigger("Bob");
     }
 
     public void SinkHook()
     {
-        Debug.Log("Sink");
         hookAnimator.SetTrigger("Sink");
     }
 }

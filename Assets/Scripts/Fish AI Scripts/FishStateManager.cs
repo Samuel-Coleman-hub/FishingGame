@@ -24,18 +24,9 @@ public class FishStateManager : MonoBehaviour
     [HideInInspector] public Vector3 swimPoint;
     [HideInInspector] public bool swimPointSet = false;
 
-
-    
-    //Individual Fish Settings
-    public enum Fishes
-    {
-        Seabass,
-        normal
-    };
-
     [Header("Unique Fish Settings")]
-    [SerializeField] public GameObject fishMesh;
-    [SerializeField] public Fishes typeOfFish = Fishes.Seabass;
+    [SerializeField] public GameObject fishPrefab;
+    [SerializeField] public FishTracker.Fishes typeOfFish = FishTracker.Fishes.Seabass;
     //Fish movement
     [Header("Fish Movement Settings")]
     [SerializeField] public float swimPointRange = 3f;
@@ -56,13 +47,13 @@ public class FishStateManager : MonoBehaviour
     [HideInInspector] public GameObject hook;
     [HideInInspector] public HingeJoint hookHinge;
 
-    public (string, GameObject) fishData;
+    public (FishTracker.Fishes, GameObject) fishData;
 
     // Start is called before the first frame update
     void Start()
     {
         //Tuple of data to be passed when caught
-        fishData = (typeOfFish.ToString(), fishMesh);
+        fishData = (typeOfFish, fishPrefab);
 
         //Get Components
         agent = GetComponent<NavMeshAgent>();
