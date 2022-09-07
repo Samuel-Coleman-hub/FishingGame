@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     [Header("Scrapbook Settings")]
     [SerializeField] GameObject scrapbookObj;
     [SerializeField] GameObject scrapbookUI;
+    private ScrapBookInterface scrapbookInterface;
 
     [SerializeField] Volume volume;
 
@@ -59,6 +60,7 @@ public class GameManager : MonoBehaviour
         movement = playerObj.GetComponent<ThirdPersonMovement>();
         fishingController = fishingObj.GetComponent<FishingController>();
         cameraInput = playerCamera.GetComponent<CinemachineInputProvider>();
+        scrapbookInterface = scrapbookUI.GetComponent<ScrapBookInterface>();
     }
 
     private void TriggerScrapbook(InputAction.CallbackContext context)
@@ -114,6 +116,8 @@ public class GameManager : MonoBehaviour
         fishUINameText.text = fishData.Item1.ToString();
         StartCoroutine(FadeText(fishUINameText, 1.5f));
         StartCoroutine(FadeText(fishUITitleText, 1.5f));
+
+        scrapbookInterface.UpdateScrapbook(fishData.Item1);
     }
 
     private void DisplayFishPrefab(GameObject fishPrefab)
