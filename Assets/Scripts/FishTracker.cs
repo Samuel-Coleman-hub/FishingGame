@@ -10,6 +10,9 @@ public class FishTracker : MonoBehaviour
     {
         Seabass,
         Chub,
+        Pike,
+        Gudgeon,
+        Roach,
         normal
     }
 
