@@ -113,7 +113,7 @@ public class GameManager : MonoBehaviour
         StartCoroutine(BlurScreen());
         DisplayFishPrefab(fishData.Item2);
 
-        fishUINameText.text = fishData.Item1.ToString();
+        fishUINameText.text = fishData.Item1.ToString().Replace("_", " ");
         StartCoroutine(FadeText(fishUINameText, 1.5f));
         StartCoroutine(FadeText(fishUITitleText, 1.5f));
 

@@ -13,6 +13,9 @@ public class FishTracker : MonoBehaviour
         Pike,
         Gudgeon,
         Roach,
+        Dace,
+        Tench,
+        Crucian_Carp,
         normal
     }
 
