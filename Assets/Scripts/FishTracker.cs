@@ -16,6 +16,8 @@ public class FishTracker : MonoBehaviour
         Dace,
         Tench,
         Crucian_Carp,
+        Brown_Trout,
+        Catfish,
         normal
     }
 
