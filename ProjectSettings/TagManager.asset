@@ -9,6 +9,7 @@ TagManager:
   - Hook
   - Fish
   - FishingManager
+  - Water Collider
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,7 @@ TagManager:
   - Hook
   - Trees
   - Fish
-  - 
+  - Water Colliders
   - 
   - 
   - 

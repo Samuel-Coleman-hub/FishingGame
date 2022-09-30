@@ -16,6 +16,11 @@ public class FishingController : MonoBehaviour
     [SerializeField] float[] hookThrowSpeeds;
     [SerializeField] float hookThrowWaitTime;
 
+    [SerializeField] AudioClip castAudio;
+    [SerializeField] AudioClip reelAudio;
+    [SerializeField] AudioClip bobAudio;
+    [SerializeField] AudioClip sinkAudio;
+
     private PlayerInput playerInput;
     private Animator playerAnimator;
     private Animator hookContainerAnimator;
@@ -32,6 +37,8 @@ public class FishingController : MonoBehaviour
     private ThirdPersonMovement movement;
     private LineRenderer lineRenderer;
 
+    private AudioSource audioSource;
+
     //private List<FishController> fishes = new List<FishController>();
 
     private void Awake()
@@ -47,6 +54,7 @@ public class FishingController : MonoBehaviour
         hookAnimator = hookObj.GetComponent<Animator>();
         movement = GetComponent<ThirdPersonMovement>();
         playerAnimator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
 
         fishingRodCast = fishingManager.fishingRodCast;
     }
@@ -66,12 +74,10 @@ public class FishingController : MonoBehaviour
     private void Cast()
     {
         stateChanging = true;
-        //Detach child hook from armature when casting
-        //hookAnimator.SetTrigger("Cast");
-        //StartCoroutine(ThrowHook());
         StartCoroutine(WaitToThrow());
         playerAnimator.SetTrigger("Cast");
-        //fishingRodAnimator.SetTrigger("Cast");
+        audioSource.clip = castAudio;
+        audioSource.Play();
         movement.enabled = false;
         fishingManager.fishingRodCast = true;
     }
@@ -82,6 +88,8 @@ public class FishingController : MonoBehaviour
         fishingManager.fishingRodReeling = true;
         StartCoroutine(ThrowHook());
         playerAnimator.SetTrigger("Reel");
+        audioSource.clip = reelAudio;
+        audioSource.Play();
         fishingManager.fishAtHook = false;
         //fishingRodAnimator.SetTrigger("Reel");
         //ScareNearbyFish();
@@ -154,10 +162,14 @@ public class FishingController : MonoBehaviour
     public void BobHook()
     {
         hookAnimator.SetTrigger("Bob");
+        audioSource.clip = bobAudio;
+        audioSource.Play();
     }
 
     public void SinkHook()
     {
         hookAnimator.SetTrigger("Sink");
+        audioSource.clip = sinkAudio;
+        audioSource.Play();
     }
 }
