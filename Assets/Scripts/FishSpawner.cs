@@ -4,22 +4,37 @@ using UnityEngine;
 
 public class FishSpawner : MonoBehaviour
 {
-    [SerializeField] GameObject fishPrefab;
-    public List<FishController> fishes = new List<FishController>();
+    
+    [SerializeField] GameObject[] fishes;
 
-    private GameObject newFish;
+    //private void Start()
+    //{
+    //    RandomlySpawnFish();
+    //}
 
-    private void Start()
+    //private void RandomlySpawnFish()
+    //{
+    //    foreach(Transform child in transform)
+    //    {
+    //        newFish = Instantiate(fishPrefab, child);
+    //        fishes.Add(newFish.GetComponent<FishController>());
+    //    }
+    //}
+
+    public IEnumerator WaitToRespawn(Vector3 spawnPosition ,FishTracker.Fishes fish)
     {
-        RandomlySpawnFish();
-    }
+        yield return new WaitForSeconds(10f);
 
-    private void RandomlySpawnFish()
-    {
-        foreach(Transform child in transform)
+        for (int i = 0; i < fishes.Length; i++)
         {
-            newFish = Instantiate(fishPrefab, child);
-            fishes.Add(newFish.GetComponent<FishController>());
+            FishStateManager fishStateManager = fishes[i].GetComponent<FishStateManager>();
+
+            if (fishStateManager.typeOfFish == fish)
+            {
+                Debug.Log("new fish spawned");
+                GameObject.Instantiate(fishes[i], transform.TransformPoint(spawnPosition), gameObject.transform.rotation);
+            }
         }
+
     }
 }

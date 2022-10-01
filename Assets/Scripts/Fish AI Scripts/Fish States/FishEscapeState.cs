@@ -24,6 +24,7 @@ public class FishEscapeState : FishBaseState
 
     public void FishEscape(FishStateManager fish)
     {
+        fish.fishingManager.RespawnEscapedFish(fish.respawnLocation, fish.typeOfFish);
         fish.agent.enabled = true;
         fish.swimPointRange = 15f;
         fish.FindSwimPoint();

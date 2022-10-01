@@ -23,10 +23,12 @@ public class FishStateManager : MonoBehaviour
     [HideInInspector] public bool thisFishToHook;
     [HideInInspector] public Vector3 swimPoint;
     [HideInInspector] public bool swimPointSet = false;
+    
 
     [Header("Unique Fish Settings")]
     [SerializeField] public GameObject fishPrefab;
     [SerializeField] public FishTracker.Fishes typeOfFish = FishTracker.Fishes.Seabass;
+    [SerializeField] public Vector3 respawnLocation;
     //Fish movement
     [Header("Fish Movement Settings")]
     [SerializeField] public float swimPointRange = 3f;

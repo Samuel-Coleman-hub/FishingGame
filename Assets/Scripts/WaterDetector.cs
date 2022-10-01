@@ -25,7 +25,7 @@ public class WaterDetector : MonoBehaviour
         if (Physics.Raycast(transform.position, Quaternion.AngleAxis(degreeOfAngle, transform.right) * transform.forward, out hit, Mathf.Infinity))
         {
 
-            if (hit.transform.gameObject.tag == "Water")
+            if (hit.transform.gameObject.tag == "Water" || hit.transform.gameObject.tag == "Water Collider")
             {
                 fishingManager.lookingAtWater = true;
                 //Debug.Log("Looking at water");
@@ -33,7 +33,7 @@ public class WaterDetector : MonoBehaviour
             else
             {
                 fishingManager.lookingAtWater = false;
-                //Debug.Log("Not looking at water");
+                //Debug.Log("Not looking at water" + hit.transform.gameObject.tag);
             }
 
             //Debug.DrawRay(transform.position, Quaternion.AngleAxis(degreeOfAngle, transform.right) * transform.forward * 20, Color.green);

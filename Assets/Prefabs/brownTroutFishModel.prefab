@@ -488,14 +488,15 @@ MonoBehaviour:
   swimPointSet: 0
   fishPrefab: {fileID: 8087781412819862311}
   typeOfFish: 8
+  respawnLocation: {x: 50.91, y: -4.25, z: 144.13}
   swimPointRange: 3
   sightRange: 3
   waitTimeToDie: 4
   minBites: 1
-  maxBites: 1
+  maxBites: 6
   distanceToMoveWhenBiting: 2.5
-  bitingSpeed: 1
-  waitTimeToCatch: 3
+  bitingSpeed: 2.5
+  waitTimeToCatch: 0.75
   fishingManager: {fileID: 0}
   rb: {fileID: 0}
   agent: {fileID: 0}

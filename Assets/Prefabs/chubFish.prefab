@@ -344,13 +344,16 @@ MonoBehaviour:
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 256
+  fishSpawner: {fileID: 57670722339613346, guid: 6cbc3a46380b06c428155c1621667c63,
+    type: 3}
   thisFishToHook: 0
   swimPoint: {x: 0, y: 0, z: 0}
   swimPointSet: 0
   fishPrefab: {fileID: 3273285108008155932}
   typeOfFish: 1
-  swimPointRange: 3
-  sightRange: 3
+  respawnLocation: {x: -6.57, y: -4.19, z: -53.5}
+  swimPointRange: 4
+  sightRange: 4
   waitTimeToDie: 4
   minBites: 1
   maxBites: 1

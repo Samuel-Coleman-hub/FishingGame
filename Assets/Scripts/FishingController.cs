@@ -65,7 +65,7 @@ public class FishingController : MonoBehaviour
         {
             Reel();
         }
-        else if(!fishingManager.fishingRodCast && fishingManager.lookingAtWater && !stateChanging)
+        else if(!fishingManager.fishingRodCast && fishingManager.lookingAtWater && !stateChanging && movement.enabled)
         {
             Cast();
         }
@@ -138,6 +138,11 @@ public class FishingController : MonoBehaviour
             movement.enabled = true;
             fishingManager.fishingRodCast = false;
             fishingManager.fishingRodReeling = false;
+        }
+        else
+        {
+            audioSource.clip = bobAudio;
+            audioSource.Play();
         }
 
         stateChanging = false;

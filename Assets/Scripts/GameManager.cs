@@ -14,11 +14,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject fishingObj;
     [SerializeField] GameObject canvasObj;
     [SerializeField] GameObject playerCamera;
+    [SerializeField] FishingManager fishingManager;
 
     [Header("Display Fish Settings")]
     [SerializeField] Transform fishUIDispalyPos;
     [SerializeField] TextMeshProUGUI fishUITitleText;
     [SerializeField] TextMeshProUGUI fishUINameText;
+    [SerializeField] AudioClip fishCaughtAudio;
 
     [Header("Scrapbook Settings")]
     [SerializeField] GameObject scrapbookObj;
@@ -37,8 +39,12 @@ public class GameManager : MonoBehaviour
 
     private bool scrapBookOpen = false;
     private bool fishUIOpen = false;
+    private bool blurring = false;
+    private bool scrapbookOpening = false;
+    private bool displayUIOpening = false;
 
     private GameObject displayFish;
+    private AudioSource audioSource;
     // Start is called before the first frame update
 
     private void Awake()
@@ -49,7 +55,6 @@ public class GameManager : MonoBehaviour
 
         closeFishUI = playerInput.actions["CloseFishUI"];
         closeFishUI.performed += CloseFishUI;
-
     }
 
     void Start()
@@ -61,63 +66,87 @@ public class GameManager : MonoBehaviour
         fishingController = fishingObj.GetComponent<FishingController>();
         cameraInput = playerCamera.GetComponent<CinemachineInputProvider>();
         scrapbookInterface = scrapbookUI.GetComponent<ScrapBookInterface>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void TriggerScrapbook(InputAction.CallbackContext context)
     {
-        if (!scrapBookOpen)
+        if (!scrapbookOpening)
         {
-            StartCoroutine(BlurScreen());
-            scrapbookObj.SetActive(true);
-            scrapbookUI.SetActive(true);
-            ToggleMovement();
-            scrapBookOpen = true;
+            if (!scrapBookOpen && !fishUIOpen)
+            {
+                scrapbookOpening = true;
+                if (!blurring)
+                {
+                    StartCoroutine(BlurScreen());
+                }
 
-            Cursor.lockState = CursorLockMode.Confined;
-            Cursor.visible = true;
-        }
-        else
-        {
-            scrapbookObj.SetActive(false);
-            scrapbookUI.SetActive(false);
-            ToggleMovement();
-            scrapBookOpen = false;
+                scrapbookObj.SetActive(true);
+                scrapbookUI.SetActive(true);
+                ToggleMovement();
+                scrapBookOpen = true;
 
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-            StartCoroutine(BlurScreen());
+            }
+            else
+            {
+                scrapbookObj.SetActive(false);
+                scrapbookUI.SetActive(false);
+                ToggleMovement();
+                scrapBookOpen = false;
+
+                if (!blurring)
+                {
+                    StartCoroutine(BlurScreen());
+                }
+
+            }
         }
+        
     }
 
     private void CloseFishUI(InputAction.CallbackContext context)
     {
-        if (fishUIOpen)
+        if (fishUIOpen && !displayUIOpening)
         {
-            ToggleMovement();
-            StartCoroutine(BlurScreen());
+
+            if (!blurring)
+            {
+                StartCoroutine(BlurScreen());
+            }
             StartCoroutine(FadeText(fishUINameText, 0.2f));
             StartCoroutine(FadeText(fishUITitleText, 0.2f));
 
             GameObject.Destroy(displayFish);
-            playerObj.GetComponent<FishingController>().enabled = true;
+            StartCoroutine(WaitToEnablePlayer());
             fishUIOpen = false;
         }
     }
 
     public void DisplayCaughtFishUI((FishTracker.Fishes, GameObject) fishData)
     {
+        displayUIOpening = true;
         playerObj.GetComponent<FishingController>().enabled = false;
 
         fishUIOpen = true;
         ToggleMovement();
-        StartCoroutine(BlurScreen());
+        if (!blurring)
+        {
+            StartCoroutine(BlurScreen());
+        }
         DisplayFishPrefab(fishData.Item2);
 
         fishUINameText.text = fishData.Item1.ToString().Replace("_", " ");
         StartCoroutine(FadeText(fishUINameText, 1.5f));
         StartCoroutine(FadeText(fishUITitleText, 1.5f));
 
+        audioSource.clip = fishCaughtAudio;
+        audioSource.Play();
+
         scrapbookInterface.UpdateScrapbook(fishData.Item1);
+        Debug.Log(fishingManager.totalFishCaught);
+        scrapbookInterface.UpdateTotal(fishingManager.totalFishCaught);
+
+        
     }
 
     private void DisplayFishPrefab(GameObject fishPrefab)
@@ -160,6 +189,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator BlurScreen()
     {
+        blurring = true;
         float time = 0;
         float duration = 1f;
         float startValue;
@@ -183,14 +213,25 @@ public class GameManager : MonoBehaviour
                 depth.focalLength.value = Mathf.Lerp(startValue, endValue, time / duration);
                 time += Time.deltaTime;
                 yield return null;
+                blurring = false;
             }
         }
+        scrapbookOpening = false;
+        displayUIOpening = false;
 
     }
 
     private void ToggleMovement()
     {
+
         movement.enabled = !movement.enabled;
         cameraInput.enabled = !cameraInput.enabled;
+    }
+
+    IEnumerator WaitToEnablePlayer()
+    {
+        yield return new WaitForSeconds(2f);
+        ToggleMovement();
+        playerObj.GetComponent<FishingController>().enabled = true;
     }
 }

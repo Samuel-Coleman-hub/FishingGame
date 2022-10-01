@@ -194,6 +194,17 @@
                     "action": "CloseFishUI",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b2f5ddc1-6356-487f-a616-c9a70505134f",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CloseFishUI",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
