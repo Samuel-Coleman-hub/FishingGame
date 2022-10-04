@@ -39,7 +39,6 @@ public class FishingController : MonoBehaviour
 
     private AudioSource audioSource;
 
-    //private List<FishController> fishes = new List<FishController>();
 
     private void Awake()
     {
@@ -91,18 +90,7 @@ public class FishingController : MonoBehaviour
         audioSource.clip = reelAudio;
         audioSource.Play();
         fishingManager.fishAtHook = false;
-        //fishingRodAnimator.SetTrigger("Reel");
-        //ScareNearbyFish();
-        //StartCoroutine(WaitToLift());
     }
-
-    //private void ScareNearbyFish()
-    //{
-    //    foreach(FishController fish in fishes)
-    //    {
-    //        fish.FishEscape();
-    //    }
-    //}
 
     private IEnumerator ThrowHook()
     {
@@ -154,15 +142,6 @@ public class FishingController : MonoBehaviour
         StartCoroutine(ThrowHook());
 
     }
-
-    //private IEnumerator WaitToLift()
-    //{
-    //    yield return new WaitForSeconds(2f);
-    //    hookContainerAnimator.SetTrigger("Rise");
-    //    movement.enabled = true;
-    //    fishingManager.fishingRodCast = false;
-    //    fishingManager.fishingRodReeling = false;
-    //}
 
     public void BobHook()
     {

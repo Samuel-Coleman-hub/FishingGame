@@ -143,7 +143,6 @@ public class GameManager : MonoBehaviour
         audioSource.Play();
 
         scrapbookInterface.UpdateScrapbook(fishData.Item1);
-        Debug.Log(fishingManager.totalFishCaught);
         scrapbookInterface.UpdateTotal(fishingManager.totalFishCaught);
 
         

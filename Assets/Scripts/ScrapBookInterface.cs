@@ -34,7 +34,6 @@ public class ScrapBookInterface : MonoBehaviour
 
         if (fishCaught >= 9)
         {
-            Debug.Log("Enable Win Text");
             winText.SetActive(true);
         }
     }

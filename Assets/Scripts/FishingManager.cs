@@ -52,10 +52,6 @@ public class FishingManager : MonoBehaviour
         {
             totalFishCaught++;
         }
-        else
-        {
-            Debug.Log("Already got this fish");
-        }
 
         gameManager.DisplayCaughtFishUI(fishData);
         //Add fish caught to a dictionary of fish and mark as caught
