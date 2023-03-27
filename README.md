@@ -6,4 +6,4 @@ A Unity game I programmed in C# I created over the summer break.
 
 ![Game Cover Art](https://github.com/Samuel-Coleman-hub/FishingGame/blob/main/Assets/Images/mySummerFishingCoverArt.png)
 
-![Fishing Gameplay Gif](https://github.com/Samuel-Coleman-hub/FishingGame/blob/main/Assets/Images/msfGif.mp4)
+![Fishing Gameplay Gif](https://github.com/Samuel-Coleman-hub/FishingGame/blob/main/Assets/Images/msfGif1.gif)
